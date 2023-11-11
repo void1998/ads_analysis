@@ -24,4 +24,9 @@ Route::post('/login', [AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->get('/tiktok/campaigns', [TiktokController::class,'getCampaigns']);
 Route::middleware('auth:sanctum')->get('/tiktok/ads_groups', [TiktokController::class,'getAdsGroups']);
+Route::middleware('auth:sanctum')->get('/tiktok/ads', [TiktokController::class,'getAds']);
+
+Route::middleware('auth:sanctum')->get('/tiktok/report/campaigns', [TiktokController::class,'getCampaignsReport']);
+Route::middleware('auth:sanctum')->get('/tiktok/report/ads_groups', [TiktokController::class,'getAdsGroupsReport']);
+Route::middleware('auth:sanctum')->get('/tiktok/report/ads', [TiktokController::class,'getAdsReport']);
 
