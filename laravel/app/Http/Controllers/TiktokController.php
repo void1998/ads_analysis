@@ -23,7 +23,7 @@ class TiktokController extends Controller
             $response = Http::withHeaders([
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, ['advertiser_id' => config('services.tiktok.advertiser_id')]);
-            response()->json($response);
+            return response()->json($response);
             if ($response->successful()) {
                 $campaigns = $response['data']['list'];
                 foreach ($campaigns as $campaignData) {
