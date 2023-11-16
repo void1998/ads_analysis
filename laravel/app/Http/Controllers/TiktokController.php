@@ -31,7 +31,7 @@ class TiktokController extends Controller
                     Campaign::create($campaignData);
                 }
                 DB::commit();
-                return response()->json($response);
+                return response()->json($campaigns);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
