@@ -20,3 +20,10 @@ Route::get('/', function () {
 Route::get('/privacy-policy', function () {
     return view('privacy');
 });
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::post('/main/checklogin', 'MainController@checklogin');
+Route::get('main/successlogin', 'MainController@successlogin');
