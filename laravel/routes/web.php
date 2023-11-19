@@ -25,5 +25,5 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::post('/main/checklogin', 'MainController@checklogin');
-Route::get('main/successlogin', 'MainController@successlogin');
+Route::post('/main/checklogin', [\App\Http\Controllers\AuthController::class,'checklogin']);
+Route::get('main/successlogin', [\App\Http\Controllers\AuthController::class,'successlogin']);
