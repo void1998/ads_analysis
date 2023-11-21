@@ -41,12 +41,12 @@
 <body>
 <h1>Looker App for Analytics by Fustoqah</h1>
 
-<img src="instafustoqahorg.jpg" alt="Fustoqah Icon">
+<img src="https://ibb.co/W64ZrgV" alt="Fustoqah Icon">
 
-<p><a href="https://rmmc.store/ads_analysis/login">Login</a></p>
+<p><a href="https://rmmc.store/login">Login</a></p>
 
-<p><a href="https://rmmc.store/ads_analysis/term-of-service">Term of Service</a></p>
+<p><a href="https://rmmc.store/term-of-service">Term of Service</a></p>
 
-<p><a href="https://rmmc.store/ads_analysis/privacy-policy">Privacy Policy</a></p>
+<p><a href="https://rmmc.store/privacy-policy">Privacy Policy</a></p>
 </body>
 </html>
