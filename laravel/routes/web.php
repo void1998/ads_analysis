@@ -20,7 +20,9 @@ Route::get('/', function () {
 Route::get('/privacy-policy', function () {
     return view('privacy');
 });
-
+Route::get('/term-of-service', function () {
+    return view('terms');
+});
 Route::get('/login', function () {
     return view('login');
 });
