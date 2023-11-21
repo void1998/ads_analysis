@@ -41,7 +41,7 @@
 <body>
 <h1>Looker App for Analytics by Fustoqah</h1>
 
-<img src="https://ibb.co/W64ZrgV" alt="Fustoqah Icon">
+<img src="https://i.ibb.co/FKL2QgH/fustoqah.jpg" alt="Fustoqah Icon">
 
 <p><a href="https://rmmc.store/login">Login</a></p>
 
