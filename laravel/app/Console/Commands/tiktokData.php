@@ -36,12 +36,18 @@ class tiktokData extends Command
     public function handle()
     {
         Log::info("tiktok data sync start");
-        $this->getCampaigns();
-        $this->getAdsGroups();
-        $this->getAds();
-        $this->getCampaignsReport();
-        $this->getAdsGroupsReport();
-        $this->getAdsReport();
+        $campaignsCount = $this->getCampaigns();
+        Log::info('campaignsCount:'.$campaignsCount);
+        $adsGroupsCount = $this->getAdsGroups();
+        Log::info('adsGroupsCount:'.$adsGroupsCount);
+        $adsCount = $this->getAds();
+        Log::info('adsCount:'.$adsCount);
+        $campaignsReportsCount = $this->getCampaignsReport();
+        Log::info('campaignsReportsCount:'.$campaignsReportsCount);
+        $adsGroupsReportsCount = $this->getAdsGroupsReport();
+        Log::info('adGroupsReportsCount:'.$adsGroupsReportsCount);
+        $adsReportsCount = $this->getAdsReport();
+        Log::info('adsReportsCount:'.$adsReportsCount);
         Log::info("tiktok data sync end");
     }
 
@@ -69,7 +75,7 @@ class tiktokData extends Command
                     Campaign::create($campaignData);
                 }
                 DB::commit();
-                return response()->json($campaigns);
+                return count($campaigns);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -78,7 +84,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-
+            Log::info($e->getMessage());
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
                 'error' => $e->getMessage(),
@@ -109,7 +115,7 @@ class tiktokData extends Command
                     AdsGroup::create($groupData);
                 }
                 DB::commit();
-                return response()->json($groups);
+                return count($groups);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -118,7 +124,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-
+            Log::info($e->getMessage());
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
                 'error' => $e->getMessage(),
@@ -148,7 +154,7 @@ class tiktokData extends Command
                     Ad::create($adData);
                 }
                 DB::commit();
-                return response()->json($ads);
+                return count($ads);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -158,7 +164,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-            Log::info($e);
+            Log::info($e->getMessage());
 
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
@@ -203,7 +209,7 @@ class tiktokData extends Command
                     AdsReport::create($adReport);
                 }
                 DB::commit();
-                return response()->json($adsReport);
+                return count($adsReport);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -212,7 +218,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-
+            Log::info($e->getMessage());
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
                 'error' => $e->getMessage(),
@@ -256,7 +262,7 @@ class tiktokData extends Command
                     AdsGroupsReport::create($adGroupReport);
                 }
                 DB::commit();
-                return response()->json($adsGroupsReport);
+                return count($adsGroupsReport);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -265,7 +271,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-
+            Log::info($e->getMessage());
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
                 'error' => $e->getMessage(),
@@ -309,7 +315,7 @@ class tiktokData extends Command
                     CampaignsReport::create($campaignReport);
                 }
                 DB::commit();
-                return response()->json($campaignsReport);
+                return count($campaignsReport);
             } else {
                 return response()->json([
                     'message' => 'Failed to fetch TikTok campaign information.',
@@ -318,7 +324,7 @@ class tiktokData extends Command
         } catch (\Exception $e) {
             // An exception occurred, so we roll back the transaction and return an error response
             DB::rollBack();
-            Log::info($e);
+            Log::info($e->getMessage());
             return response()->json([
                 'message' => 'An error occurred while fetching TikTok campaign information.',
                 'error' => $e->getMessage(),
