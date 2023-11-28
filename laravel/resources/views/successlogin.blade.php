@@ -25,3 +25,14 @@
 </div>
 </body>
 </html>
+<script>
+    // JavaScript code to redirect to the provided URL
+    function redirectToLookerStudio() {
+        // Specify the URL to redirect
+        //  the user to the specified URL
+        window.location.href = "https://lookerstudio.google.com/reporting/7c4c32b7-c60e-41f4-bd1e-b2a973923caa";
+    }
+
+    // Call the function to initiate the redirection
+    redirectToLookerStudio();
+</script>
