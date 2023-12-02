@@ -117,11 +117,11 @@ class snapchatData extends Command
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
                     $adsquad = $this->convertArraysToJson($adsquad);
-                    $carbonDate = Carbon::parse($adsquad['updated_at'])->toDateTimeString();
-                    $adsquad['updated_at'] = $carbonDate;
-
-                    $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
-                    $adsquad['created_at'] = $carbonDate;
+//                    $carbonDate = Carbon::parse($adsquad['updated_at'])->toDateTimeString();
+//                    $adsquad['updated_at'] = $carbonDate;
+//
+//                    $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
+//                    $adsquad['created_at'] = $carbonDate;
 
                     $carbonDate = Carbon::parse($adsquad['start_time'])->toDateTimeString();
                     $adsquad['start_time'] = $carbonDate;
