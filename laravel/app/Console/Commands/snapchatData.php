@@ -371,13 +371,14 @@ class snapchatData extends Command
             $client_secret = config('services.snapchat.client_secret');
             $apiEndpoint = 'https://accounts.snapchat.com/login/oauth2/access_token';
 
-            $response = Http::post($apiEndpoint, [
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ])->post($apiEndpoint, [
                 'refresh_token' => $refresh_token,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
                 'grant_type' => 'refresh_token',
             ]);
-            dd($response->json());
             if ($response->successful()) {
                 $response = $response->json();
                 return $response['access_token'];
