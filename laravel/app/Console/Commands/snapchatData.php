@@ -70,6 +70,7 @@ class snapchatData extends Command
                 foreach ($list as $campaignData) {
                     $campaign = $campaignData['campaign'];
                     $campaign = $this->convertArraysToJson($campaign);
+                    $campaign['updated_at'] = Carbon::now()->toDateTimeString();
                     DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
@@ -109,6 +110,7 @@ class snapchatData extends Command
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
                     $adsquad = $this->convertArraysToJson($adsquad);
+                    $adsquad['updated_at'] = Carbon::now()->toDateTimeString();
                     DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
                 }
                 DB::commit();
@@ -147,6 +149,7 @@ class snapchatData extends Command
                 foreach ($list as $adData) {
                     $ad = $adData['ad'];
                     $ad = $this->convertArraysToJson($ad);
+                    $ad['updated_at'] = Carbon::now()->toDateTimeString();
                     DB::table('snapchat_ads')->updateOrInsert(['id' => $ad['id']], $ad);
                 }
                 DB::commit();
