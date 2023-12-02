@@ -79,8 +79,8 @@ class snapchatData extends Command
                     $carbonDate = Carbon::parse($campaign['start_time'])->toDateTimeString();
                     $campaign['start_time'] = $carbonDate;
 
-//                    $carbonDate = Carbon::parse($campaign['end_time'])->toDateTimeString();
-//                    $campaign['end_time'] = $carbonDate;
+                    $carbonDate = Carbon::now()->toDateTimeString();
+                    $campaign['end_time'] = $carbonDate;
                     DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
