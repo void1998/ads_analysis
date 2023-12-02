@@ -386,16 +386,16 @@ class snapchatData extends Command
                 $errorMessage = 'Failed to get access token.';
 
                 // Log the error message
-                Log::error($errorMessage .' '.$response->error, ['status_code' => $statusCode]);
+                Log::error($errorMessage .' '.$response->json()['error'], ['status_code' => $statusCode]);
 
-                return $errorMessage;
+                return 0;
             }
         } catch (\Exception $e) {
             // Log any unexpected exceptions
             Log::error('An unexpected error occurred in get access token: ' . $e->getMessage());
 
             // Return a generic error response
-            return $e->getMessage();
+            return 0;
         }
     }
 }
