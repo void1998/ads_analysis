@@ -70,7 +70,11 @@ class snapchatData extends Command
                 foreach ($list as $campaignData) {
                     $campaign = $campaignData['campaign'];
                     $campaign = $this->convertArraysToJson($campaign);
-                    $campaign['updated_at'] = Carbon::now()->toDateTimeString();
+                    $carbonDate = Carbon::parse($campaign['updated_at'])->toDateTimeString();
+                    $campaign['updated_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($campaign['created_at'])->toDateTimeString();
+                    $campaign['created_at'] = $carbonDate;
                     DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
@@ -110,7 +114,11 @@ class snapchatData extends Command
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
                     $adsquad = $this->convertArraysToJson($adsquad);
-                    $adsquad['updated_at'] = Carbon::now()->toDateTimeString();
+                    $carbonDate = Carbon::parse($adsquad['updated_at'])->toDateTimeString();
+                    $adsquad['updated_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
+                    $adsquad['created_at'] = $carbonDate;
                     DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
                 }
                 DB::commit();
@@ -149,7 +157,11 @@ class snapchatData extends Command
                 foreach ($list as $adData) {
                     $ad = $adData['ad'];
                     $ad = $this->convertArraysToJson($ad);
-                    $ad['updated_at'] = Carbon::now()->toDateTimeString();
+                    $carbonDate = Carbon::parse($ad['updated_at'])->toDateTimeString();
+                    $ad['updated_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($ad['created_at'])->toDateTimeString();
+                    $ad['created_at'] = $carbonDate;
                     DB::table('snapchat_ads')->updateOrInsert(['id' => $ad['id']], $ad);
                 }
                 DB::commit();
