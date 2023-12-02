@@ -69,6 +69,7 @@ class snapchatData extends Command
                 $list = $response['campaigns'];
                 foreach ($list as $campaignData) {
                     $campaign = $campaignData['campaign'];
+                    $campaign = $this->convertArraysToJson($campaign);
                     DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
@@ -107,6 +108,7 @@ class snapchatData extends Command
                 $list = $response['adsquads'];
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
+                    $adsquad = $this->convertArraysToJson($adsquad);
                     DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
                 }
                 DB::commit();
@@ -144,7 +146,8 @@ class snapchatData extends Command
                 $list = $response['ads'];
                 foreach ($list as $adData) {
                     $ad = $adData['ad'];
-                    DB::table('snapchat_ads')->updateOrInsert(['id' => $adData['id']], $adData);
+                    $ad = $this->convertArraysToJson($ad);
+                    DB::table('snapchat_ads')->updateOrInsert(['id' => $ad['id']], $ad);
                 }
                 DB::commit();
                 return count($list);
