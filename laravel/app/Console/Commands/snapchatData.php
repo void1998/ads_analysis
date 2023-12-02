@@ -386,7 +386,7 @@ class snapchatData extends Command
                 $errorMessage = 'Failed to get access token.';
 
                 // Log the error message
-                Log::error($errorMessage, ['status_code' => $statusCode]);
+                Log::error($errorMessage .' '.$response->json()->error, ['status_code' => $statusCode]);
 
                 return $errorMessage;
             }
