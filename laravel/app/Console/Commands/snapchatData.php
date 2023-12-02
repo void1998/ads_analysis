@@ -377,7 +377,7 @@ class snapchatData extends Command
                 'client_secret' => $client_secret,
                 'grant_type' => 'refresh_token',
             ]);
-
+            dd($response);
             if ($response->successful()) {
                 $response = $response->json();
                 return $response['access_token'];
