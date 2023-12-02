@@ -75,6 +75,9 @@ class snapchatData extends Command
 
                     $carbonDate = Carbon::parse($campaign['created_at'])->toDateTimeString();
                     $campaign['created_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($campaign['start_time'])->toDateTimeString();
+                    $campaign['start_time'] = $carbonDate;
                     DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
@@ -119,6 +122,9 @@ class snapchatData extends Command
 
                     $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
                     $adsquad['created_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($adsquad['start_time'])->toDateTimeString();
+                    $adsquad['start_time'] = $carbonDate;
                     DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
                 }
                 DB::commit();
@@ -162,6 +168,9 @@ class snapchatData extends Command
 
                     $carbonDate = Carbon::parse($ad['created_at'])->toDateTimeString();
                     $ad['created_at'] = $carbonDate;
+
+                    $carbonDate = Carbon::parse($ad['start_time'])->toDateTimeString();
+                    $ad['start_time'] = $carbonDate;
                     DB::table('snapchat_ads')->updateOrInsert(['id' => $ad['id']], $ad);
                 }
                 DB::commit();
@@ -214,8 +223,10 @@ class snapchatData extends Command
                 $mil = 1000000;
                 foreach ($campaignReports as $campaignReportData) {
                         $campaignReport['campaign_id'] = $campaignReportData['id'];
-                        $campaignReport['start_time'] = $campaignReportData['start_time'];
-                        $campaignReport['end_time'] = $campaignReportData['end_time'];
+                        $carbonDate = Carbon::parse($campaignReport['start_time'])->toDateTimeString();
+                        $campaignReport['start_time'] = $carbonDate;
+                        $carbonDate = Carbon::parse($campaignReport['end_time'])->toDateTimeString();
+                        $campaignReport['end_time'] = $carbonDate;
                         $campaignReport['impressions'] = $campaignReportData['timeseries'][0]['stats']['impressions'];
                         $campaignReport['swipes'] = $campaignReportData['timeseries'][0]['stats']['swipes'];
                         $campaignReport['spend'] = $campaignReportData['timeseries'][0]['stats']['spend']/$mil;
@@ -280,8 +291,10 @@ class snapchatData extends Command
                 $mil = 1000000;
                 foreach ($adsquadReports as $adsquadReportData) {
                     $adsquadReport['adsquad_id'] = $adsquadReportData['id'];
-                    $adsquadReport['start_time'] = $adsquadReportData['start_time'];
-                    $adsquadReport['end_time'] = $adsquadReportData['end_time'];
+                    $carbonDate = Carbon::parse($adsquadReport['start_time'])->toDateTimeString();
+                    $adsquadReport['start_time'] = $carbonDate;
+                    $carbonDate = Carbon::parse($adsquadReport['end_time'])->toDateTimeString();
+                    $adsquadReport['end_time'] = $carbonDate;
                     $adsquadReport['impressions'] = $adsquadReportData['timeseries'][0]['stats']['impressions'];
                     $adsquadReport['swipes'] = $adsquadReportData['timeseries'][0]['stats']['swipes'];
                     $adsquadReport['spend'] = $adsquadReportData['timeseries'][0]['stats']['spend']/$mil;
@@ -346,8 +359,10 @@ class snapchatData extends Command
                 $mil = 1000000;
                 foreach ($adReports as $adReportData) {
                     $adReport['ad_id'] = $adReportData['id'];
-                    $adReport['start_time'] = $adReportData['start_time'];
-                    $adReport['end_time'] = $adReportData['end_time'];
+                    $carbonDate = Carbon::parse($adReport['start_time'])->toDateTimeString();
+                    $adReport['start_time'] = $carbonDate;
+                    $carbonDate = Carbon::parse($adReport['end_time'])->toDateTimeString();
+                    $adReport['end_time'] = $carbonDate;
                     $adReport['impressions'] = $adReportData['timeseries'][0]['stats']['impressions'];
                     $adReport['swipes'] = $adReportData['timeseries'][0]['stats']['swipes'];
                     $adReport['spend'] = $adReportData['timeseries'][0]['stats']['spend']/$mil;
