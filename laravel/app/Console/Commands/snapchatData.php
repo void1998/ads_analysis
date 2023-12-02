@@ -37,6 +37,7 @@ class snapchatData extends Command
         if(!$accessToken)
         {
             Log::error('snapchat task failed');
+            return;
         }
         $campaignsCount = $this->getCampaigns($accessToken);
         Log::info('campaignsCount:'.$campaignsCount);
@@ -50,7 +51,7 @@ class snapchatData extends Command
         Log::info('$adsquadsReportsCount:'.$adsquadsReportsCount);
         $adsReportsCount = $this->getAdsReport($accessToken);
         Log::info('$adsReportsCount:'.$adsReportsCount);
-        Log::info("snapchat data sync start");
+        Log::info("snapchat data sync end");
     }
 
 
@@ -68,7 +69,7 @@ class snapchatData extends Command
                 $list = $response['campaigns'];
                 foreach ($list as $campaignData) {
                     $campaign = $campaignData['campaign'];
-                    DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id'], $campaign]);
+                    DB::table('snapchat_campaigns')->updateOrInsert(['id' => $campaign['id']], $campaign);
                 }
                 DB::commit();
                 return count($list);
@@ -106,7 +107,7 @@ class snapchatData extends Command
                 $list = $response['adsquads'];
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
-                    DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id'], $adsquad]);
+                    DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
                 }
                 DB::commit();
                 return count($list);
@@ -143,7 +144,7 @@ class snapchatData extends Command
                 $list = $response['ads'];
                 foreach ($list as $adData) {
                     $ad = $adData['ad'];
-                    DB::table('snapchat_ads')->updateOrInsert(['id' => $adData['id'], $adData]);
+                    DB::table('snapchat_ads')->updateOrInsert(['id' => $adData['id']], $adData);
                 }
                 DB::commit();
                 return count($list);
