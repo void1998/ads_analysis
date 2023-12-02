@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Models\AdsGroup;
-use App\Models\AdsGroupsReport;
+use App\Models\SnapchatCampaignReport;
 use App\Models\AdsReport;
 use App\Models\Campaign;
 use App\Models\CampaignsReport;
@@ -197,7 +197,7 @@ class SnapchatController extends Controller
                     $adGroupReport['spend'] = $adGroupReportData['metrics']['spend'];
                     $adGroupReport['stat_time_day'] = $adGroupReportData['dimensions']['stat_time_day'];
                     $adGroupReport['ad_group_id'] = $adGroupReportData['dimensions']['adgroup_id'];
-                    AdsGroupsReport::create($adGroupReport);
+                    SnapchatCampaignReport::create($adGroupReport);
                 }
                 DB::commit();
                 return response()->json($adsGroupsReport);
