@@ -403,4 +403,15 @@ class snapchatData extends Command
             return 0;
         }
     }
+
+    function convertArraysToJson($data) {
+        foreach ($data as &$value) {
+            if (is_array($value) || is_object($value)) {
+                // If the value is an array, convert it to a JSON string
+                $value = json_encode($value);
+            }
+        }
+        return $data;
+    }
+
 }

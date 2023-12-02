@@ -361,4 +361,6 @@ class tiktokData extends Command
             }
         }
         return $data;
-    }}
+    }
+
+}
