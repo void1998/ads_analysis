@@ -256,8 +256,8 @@ class snapchatData extends Command
                     conversion_ad_view,
                     conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d H:i:s'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d H:i:s'),
+                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
@@ -324,8 +324,8 @@ class snapchatData extends Command
                     conversion_ad_view,
                     conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d H:i:s'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d H:i:s'),
+                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
@@ -392,8 +392,8 @@ class snapchatData extends Command
                     conversion_ad_view,
                     conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d H:i:s'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d H:i:s'),
+                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
