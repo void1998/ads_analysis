@@ -119,16 +119,45 @@ class snapchatData extends Command
                 $list = $response['adsquads'];
                 foreach ($list as $adsquadData) {
                     $adsquad = $adsquadData['adsquad'];
-                    $adsquad = $this->convertArraysToJson($adsquad);
-                    $carbonDate = Carbon::parse($adsquad['updated_at'])->toDateTimeString();
-                    $adsquad['updated_at'] = $carbonDate;
 
-                    $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
-                    $adsquad['created_at'] = $carbonDate;
+                    $adsquad = $this->convertArraysToJson($adsquad);
+//                    $carbonDate = Carbon::parse($adsquad['updated_at'])->toDateTimeString();
+//                    $adsquad['updated_at'] = $carbonDate;
+//
+//                    $carbonDate = Carbon::parse($adsquad['created_at'])->toDateTimeString();
+//                    $adsquad['created_at'] = $carbonDate;
 
                     $carbonDate = Carbon::parse($adsquad['start_time'])->toDateTimeString();
                     $adsquad['start_time'] = $carbonDate;
-                    DB::table('snapchat_adsquads')->updateOrInsert(['id' => $adsquad['id']], $adsquad);
+
+                    $data = [];
+
+                    $data['id'] = $adsquad['id'];
+                    $data['name'] = $adsquad['name'];
+                    $data['status'] = $adsquad['status'];
+                    $data['campaign_id'] = $adsquad['campaign_id'];
+                    $data['type'] = $adsquad['type'];
+                    $data['targeting'] = $adsquad['targeting'];
+                    $data['targeting_reach_status'] = $adsquad['targeting_reach_status'];
+                    $data['placement'] = $adsquad['placement'];
+                    $data['billing_event'] = $adsquad['billing_event'];
+                    $data['auto_bid'] = $adsquad['auto_bid'];
+                    $data['target_bid'] = $adsquad['target_bid'];
+                    $data['bid_strategy'] = $adsquad['bid_strategy'];
+                    $data['daily_budget_micro'] = $adsquad['daily_budget_micro'];
+                    $data['start_time'] = $adsquad['start_time'];
+                    $data['optimization_goal'] = $adsquad['optimization_goal'];
+                    $data['conversion_window'] = $adsquad['conversion_window'];
+                    $data['pixel_id'] = $adsquad['pixel_id'];
+                    $data['delivery_constraint'] = $adsquad['delivery_constraint'];
+                    $data['pacing_type'] = $adsquad['pacing_type'];
+                    $data['child_ad_type'] = $adsquad['child_ad_type'];
+                    $data['forced_view_setting'] = $adsquad['forced_view_setting'];
+                    $data['creation_state'] = $adsquad['creation_state'];
+                    $data['delivery_status'] = $adsquad['delivery_status'];
+                    $data['skadnetwork_properties'] = $adsquad['skadnetwork_properties'];
+                    $data['delivery_properties_version'] = $adsquad['delivery_properties_version'];
+                    DB::table('snapchat_adsquads')->updateOrInsert(['id' => $data['id']], $data);
                 }
                 DB::commit();
                 return count($list);
@@ -174,7 +203,17 @@ class snapchatData extends Command
 
 //                    $carbonDate = Carbon::parse($ad['start_time'])->toDateTimeString();
 //                    $ad['start_time'] = $carbonDate;
-                    DB::table('snapchat_ads')->updateOrInsert(['id' => $ad['id']], $ad);
+
+                    $data['id'] = $ad['id'];
+                    $data['name'] = $ad['name'];
+                    $data['ad_squad_id'] = $ad['ad_squad_id'];
+                    $data['creative_id'] = $ad['creative_id'];
+                    $data['status'] = $ad['status'];
+                    $data['type'] = $ad['type'];
+                    $data['render_type'] = $ad['render_type'];
+                    $data['review_status'] = $ad['review_status'];
+                    $data['delivery_status'] = $ad['delivery_status'];
+                    DB::table('snapchat_ads')->updateOrInsert(['id' => $data['id']], $data);
                 }
                 DB::commit();
                 return count($list);
