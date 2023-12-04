@@ -246,10 +246,10 @@ class snapchatData extends Command
             ])->get($apiEndpoint, [
                 'breakdown'=>'campaign',
                 'fields'=>
-                    'conversion_purchases_value',
+                    'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
+                'start_time'=>Carbon::now()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
@@ -306,18 +306,10 @@ class snapchatData extends Command
             ])->get($apiEndpoint, [
                 'breakdown'=>'adsquad',
                 'fields'=>
-                    'conversion_purchases_value,
-                    conversion_purchases,impressions,
-                    spend,swipes,conversion_rate,
-                    conversion_add_cart,
-                    conversion_add_cart_value,
-                    conversion_page_views,
-                    conversion_page_views_value,
-                    conversion_ad_view,
-                    conversion_ad_view_value',
+                    'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
+                'start_time'=>Carbon::now()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
@@ -376,8 +368,8 @@ class snapchatData extends Command
                 'fields'=>
                     'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'start_time'=>Carbon::now()->format('Y-m-d\TH:i:s.vP'),
-                'end_time'=>Carbon::yesterday()->format('Y-m-d\TH:i:s.vP'),
+                'start_time'=>Carbon::now()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>Carbon::yesterday()->startOfDay()->format('Y-m-d\TH:i:s.vP'),
                 'granularity'=>'DAY',
             ]);
 
