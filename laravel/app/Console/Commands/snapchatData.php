@@ -254,7 +254,7 @@ class snapchatData extends Command
             ]);
 
             if ($response->successful()) {
-                $campaignReports = $response['timeseries_stats']['timeseries_stat']['breakdown_stats']['campaign'];
+                $campaignReports = $response['timeseries_stats'][0]['timeseries_stat']['breakdown_stats']['campaign'];
                 $mil = 1000000;
                 foreach ($campaignReports as $campaignReportData) {
                         $campaignReport['campaign_id'] = $campaignReportData['id'];
@@ -314,7 +314,7 @@ class snapchatData extends Command
             ]);
 
             if ($response->successful()) {
-                $adsquadReports = $response['timeseries_stats']['timeseries_stat']['breakdown_stats']['adsquad'];
+                $adsquadReports = $response['timeseries_stats'][0]['timeseries_stat']['breakdown_stats']['adsquad'];
                 $mil = 1000000;
                 foreach ($adsquadReports as $adsquadReportData) {
                     $adsquadReport['adsquad_id'] = $adsquadReportData['id'];
@@ -374,7 +374,7 @@ class snapchatData extends Command
             ]);
 
             if ($response->successful()) {
-                $adReports = $response['timeseries_stats']['timeseries_stat']['breakdown_stats']['ad'];
+                $adReports = $response['timeseries_stats'][0]['timeseries_stat']['breakdown_stats']['ad'];
                 $mil = 1000000;
                 foreach ($adReports as $adReportData) {
                     $adReport['ad_id'] = $adReportData['id'];
