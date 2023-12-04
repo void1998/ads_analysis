@@ -397,6 +397,7 @@ class snapchatData extends Command
                 'granularity'=>'DAY',
             ]);
 
+
             if ($response->successful()) {
                 $adReports = $response['timeseries_stats']['timeseries_stat']['breakdown_stats']['ad'];
                 $mil = 1000000;
