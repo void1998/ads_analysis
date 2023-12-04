@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Ad;
 use App\Models\Campaign;
+use App\Models\SnapchatAdReport;
+use App\Models\SnapchatAdsquadReport;
 use App\Models\SnapchatCampaignReport;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -334,7 +336,7 @@ class snapchatData extends Command
                     $adsquadReport['conversion_ad_view'] = $adsquadReportData['timeseries'][0]['stats']['conversion_ad_view'];
                     $adsquadReport['conversion_ad_view_value'] = $adsquadReportData['timeseries'][0]['stats']['conversion_ad_view_value']/$mil;
                     $adsquadReport['conversion_rate'] = $adsquadReportData['timeseries'][0]['stats']['conversion_rate'];
-                    SnapchatCampaignReport::create($adsquadReport);
+                    SnapchatAdsquadReport::create($adsquadReport);
                 }
                 DB::commit();
                 return count($adsquadReports);
@@ -394,7 +396,7 @@ class snapchatData extends Command
                     $adReport['conversion_ad_view'] = $adReportData['timeseries'][0]['stats']['conversion_ad_view'];
                     $adReport['conversion_ad_view_value'] = $adReportData['timeseries'][0]['stats']['conversion_ad_view_value']/$mil;
                     $adReport['conversion_rate'] = $adReportData['timeseries'][0]['stats']['conversion_rate'];
-                    SnapchatCampaignReport::create($adReport);
+                    SnapchatAdReport::create($adReport);
                 }
                 DB::commit();
                 return count($adReports);
