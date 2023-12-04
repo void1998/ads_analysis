@@ -207,13 +207,13 @@ class snapchatData extends Command
 
                     $data['id'] = $ad['id'];
                     $data['name'] = $ad['name'];
-                    $data['ad_squad_id'] = $ad['ad_squad_id'];
-                    $data['creative_id'] = $ad['creative_id'];
-                    $data['status'] = $ad['status'];
-                    $data['type'] = $ad['type'];
-                    $data['render_type'] = $ad['render_type'];
-                    $data['review_status'] = $ad['review_status'];
-                    $data['delivery_status'] = $ad['delivery_status'];
+                    $data['ad_squad_id'] = $ad['ad_squad_id'] ?? null;
+                    $data['creative_id'] = $ad['creative_id'] ?? null;
+                    $data['status'] = $ad['status'] ?? null;
+                    $data['type'] = $ad['type'] ?? null;
+                    $data['render_type'] = $ad['render_type'] ?? null;
+                    $data['review_status'] = $ad['review_status'] ?? null;
+                    $data['delivery_status'] = $ad['delivery_status'] ?? null;
                     DB::table('snapchat_ads')->updateOrInsert(['id' => $data['id']], $data);
                 }
                 DB::commit();
