@@ -40,7 +40,7 @@ return [
         'client_id' => 'c98e28be-3a15-44be-b0c5-7ff9445d482d',
         'client_secret' => '7d54b6641f3ad17b6c12'
     ],
-    'meta' => [
+    'metaKeys' => [
         'access_token' => 'EAAFLZAZC5BVxUBO7ZALlo4soEjatYAqjeiolsLBJJSYtmSqdBo0HNGPoA1Twax3O5FOYYlfX6ajkHxy3g2zjfiiN44voIEve4t6CheKUpKW4IeiXLEUrsHy6SKtwLdZAugei50ZA3Duso1BhMZCqsKJfc4C9S20CCM2NlOtupK9aisZAVPoID5MdzRm9MboHmOwszGg6rQUVGYf8FZB2'
     ]
 
