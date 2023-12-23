@@ -50,7 +50,7 @@ class metaData extends Command
         $adsReportsCount = $this->getAdsReport();
         Log::info('$adsReportsCount:'.$adsReportsCount);
         Log::info("meta data sync end");
-        return config('services.meta');
+        print config('services.meta');
     }
 
 
