@@ -50,14 +50,13 @@ class metaData extends Command
         $adsReportsCount = $this->getAdsReport();
         Log::info('$adsReportsCount:'.$adsReportsCount);
         Log::info("meta data sync end");
+        return config('services.meta');
     }
 
 
 
     public function getCampaignsReport()
     {
-        Log::info("meta token");
-        Log::info(config('services.meta'));
         try {
             DB::beginTransaction();
             $apiEndpoint = 'https://graph.facebook.com/v18.0/act_825886441839608/insights';
