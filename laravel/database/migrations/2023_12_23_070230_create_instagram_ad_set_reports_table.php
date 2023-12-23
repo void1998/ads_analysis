@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messenger_campaign_reports', function (Blueprint $table) {
+        Schema::create('instagram_ad_set_reports', function (Blueprint $table) {
             $table->id();
             $table->string('campaign_id');
+            $table->string('adset_id');
             $table->string('campaign_name');
             $table->integer('impressions');
             $table->integer('clicks');
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messenger_campaign_reports');
+        Schema::dropIfExists('instagram_ad_set_reports');
     }
 };

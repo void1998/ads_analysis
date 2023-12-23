@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('audience_network_campaign_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('campaign_id');
+            $table->string('campaign_id');
             $table->string('campaign_name');
             $table->integer('impressions');
             $table->integer('clicks');
