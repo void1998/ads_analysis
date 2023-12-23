@@ -56,6 +56,7 @@ class metaData extends Command
 
     public function getCampaignsReport()
     {
+        Log::info("meta token",config('services.meta.access_token'));
         try {
             DB::beginTransaction();
             $apiEndpoint = 'https://graph.facebook.com/v18.0/act_825886441839608/insights';
