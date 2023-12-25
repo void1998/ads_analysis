@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('publisher_platform');
 
             // JSON column for storing the purchase_roas array
-            $table->json('purchase_roas');
+            $table->json('purchase_roas')->nullable();
 
             $table->timestamps();
         });
