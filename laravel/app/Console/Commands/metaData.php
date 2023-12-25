@@ -288,7 +288,7 @@ class metaData extends Command
 
                     }
                     DB::commit();
-                    Log::info(count($adsetReport));
+                    Log::info(count($adsetsReport));
                 } else {
                     Log::info('Failed to fetch meta adset information.');
                     return response()->json([
