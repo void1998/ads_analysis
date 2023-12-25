@@ -182,7 +182,7 @@ class tiktokData extends Command
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'advertiser_id' => config('services.tiktok.advertiser_id'),
-                'metrics' => json_encode(["spend","ad_name", "impressions","total_purchase_value",
+                'metrics' => json_encode(["spend","campaign_name", "impressions","total_purchase_value",
                     "total_onsite_shopping_value","conversion_rate","clicks","offline_shopping_events_value"]),
                 'data_level' => 'AUCTION_AD',
                 'dimensions' => json_encode(["ad_id","stat_time_day"]),
@@ -235,7 +235,7 @@ class tiktokData extends Command
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'advertiser_id' => config('services.tiktok.advertiser_id'),
-                'metrics' => json_encode(["spend","ad_name", "impressions","total_purchase_value",
+                'metrics' => json_encode(["spend","campaign_name", "impressions","total_purchase_value",
                     "total_onsite_shopping_value","conversion_rate","clicks","offline_shopping_events_value"]),
                 'data_level' => 'AUCTION_ADGROUP',
                 'dimensions' => json_encode(["adgroup_id","stat_time_day"]),
@@ -288,7 +288,7 @@ class tiktokData extends Command
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'advertiser_id' => config('services.tiktok.advertiser_id'),
-                'metrics' => json_encode(["spend","ad_name", "impressions","total_purchase_value",
+                'metrics' => json_encode(["spend","campaign_name", "impressions","total_purchase_value",
                     "total_onsite_shopping_value","conversion_rate","clicks","offline_shopping_events_value"]),
                 'data_level' => 'AUCTION_CAMPAIGN',
                 'dimensions' => json_encode(["campaign_id","stat_time_day"]),
