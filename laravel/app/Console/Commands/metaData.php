@@ -79,6 +79,7 @@ class metaData extends Command
             if ($response->successful()) {
                 $campaignsReport = $response['data'];
                 foreach ($campaignsReport as $campaignReportData) {
+                    dd($campaignReportData);
                     $campaignReport = [];
                     $campaignReport['impressions'] = $campaignReportData['impressions'];
                     $campaignReport['campaign_id'] = $campaignReportData['campaign_id'];
