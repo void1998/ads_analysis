@@ -79,7 +79,6 @@ class metaData extends Command
             if ($response->successful()) {
                 $campaignsReport = $response['data'];
                 foreach ($campaignsReport as $campaignReportData) {
-                    dd($campaignReportData);
                     $campaignReport = [];
                     $campaignReport['impressions'] = $campaignReportData['impressions'];
                     $campaignReport['campaign_id'] = $campaignReportData['campaign_id'];
@@ -89,7 +88,7 @@ class metaData extends Command
                     $campaignReport['date_start'] = $campaignReportData['date_start'];
                     $campaignReport['date_stop'] = $campaignReportData['date_stop'];
                     $campaignReport['publisher_platform'] = $campaignReportData['publisher_platform'];
-//                    $campaignReport['purchase_roas'] = $campaignReportData['purchase_roas'] ? json_encode($campaignReportData['purchase_roas']) : null;
+                    $campaignReport['purchase_roas'] = isset($campaignReportData['purchase_roas']) ? json_encode($campaignReportData['purchase_roas']) : null;
 
                     if($campaignReport['publisher_platform'] == 'facebook')
                     {
@@ -156,7 +155,7 @@ class metaData extends Command
                     $adReport['date_start'] = $adReportData['date_start'];
                     $adReport['date_stop'] = $adReportData['date_stop'];
                     $adReport['publisher_platform'] = $adReportData['publisher_platform'];
-                    $adReport['purchase_roas'] = $adReportData['purchase_roas'] ? json_encode($adReportData['purchase_roas']) : null;
+                    $adReport['purchase_roas'] = isset($adReportData['purchase_roas']) ? json_encode($adReportData['purchase_roas']) : null;
 
                     if($adReport['publisher_platform'] == 'facebook')
                     {
@@ -224,7 +223,7 @@ class metaData extends Command
                     $adsetReport['date_start'] = $adsetReportData['date_start'];
                     $adsetReport['date_stop'] = $adsetReportData['date_stop'];
                     $adsetReport['publisher_platform'] = $adsetReportData['publisher_platform'];
-                    $adsetReport['purchase_roas'] = $adsetReportData['purchase_roas'] ? json_encode($adsetReportData['purchase_roas']) : null;
+                    $adsetReport['purchase_roas'] = isset($adsetReportData['purchase_roas']) ? json_encode($adsetReportData['purchase_roas']) : null;
 
                     if($adsetReport['publisher_platform'] == 'facebook')
                     {
