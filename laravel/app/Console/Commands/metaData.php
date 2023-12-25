@@ -54,7 +54,6 @@ class metaData extends Command
         $this->info($campaignsReportsCount);
         $this->info($adSetsReportsCount);
         $this->info($adsReportsCount);
-        $this->info(json_encode(config('services.meta.access_token'))) ;
 
     }
 
@@ -89,7 +88,7 @@ class metaData extends Command
                     $campaignReport['date_start'] = $campaignReportData['date_start'];
                     $campaignReport['date_stop'] = $campaignReportData['date_stop'];
                     $campaignReport['publisher_platform'] = $campaignReportData['publisher_platform'];
-                    $campaignReport['purchase_roas'] = $campaignReportData['purchase_roas'] ? json_encode($campaignReportData['purchase_roas']) : null;
+//                    $campaignReport['purchase_roas'] = $campaignReportData['purchase_roas'] ? json_encode($campaignReportData['purchase_roas']) : null;
 
                     if($campaignReport['platform'] == 'facebook')
                     {
@@ -112,7 +111,7 @@ class metaData extends Command
                 return count($campaignsReport);
             } else {
                 return response()->json([
-                    'message' => 'Failed to fetch TikTok campaign information.',
+                    'message' => 'Failed to fetch meta campaign information.',
                 ], $response->status());
             }
         } catch (\Exception $e) {
@@ -120,7 +119,7 @@ class metaData extends Command
             DB::rollBack();
             Log::info($e->getMessage());
             return response()->json([
-                'message' => 'An error occurred while fetching TikTok campaign information.',
+                'message' => 'An error occurred while fetching meta campaign information.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -179,7 +178,7 @@ class metaData extends Command
                 return count($adsReport);
             } else {
                 return response()->json([
-                    'message' => 'Failed to fetch TikTok ad information.',
+                    'message' => 'Failed to fetch meta ad information.',
                 ], $response->status());
             }
         } catch (\Exception $e) {
@@ -187,7 +186,7 @@ class metaData extends Command
             DB::rollBack();
             Log::info($e->getMessage());
             return response()->json([
-                'message' => 'An error occurred while fetching TikTok ad information.',
+                'message' => 'An error occurred while fetching meta ad information.',
                 'error' => $e->getMessage(),
             ], 500);
         }
