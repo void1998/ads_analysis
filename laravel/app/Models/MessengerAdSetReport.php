@@ -9,4 +9,16 @@ class MessengerAdSetReport extends Model
 {
     protected $table = 'messenger_ad_set_reports';
 
+    protected $fillable = [
+        'campaign_id',
+        'adset_id',
+        'campaign_name',
+        'impressions',
+        'clicks',
+        'spend',
+        'date_start',
+        'date_stop',
+        'publisher_platform',
+        'purchase_roas',
+    ];
 }
