@@ -90,18 +90,18 @@ class metaData extends Command
                     $campaignReport['publisher_platform'] = $campaignReportData['publisher_platform'];
 //                    $campaignReport['purchase_roas'] = $campaignReportData['purchase_roas'] ? json_encode($campaignReportData['purchase_roas']) : null;
 
-                    if($campaignReport['platform'] == 'facebook')
+                    if($campaignReport['publisher_platform'] == 'facebook')
                     {
                         FacebookCampaignReport::create($campaignReport);
-                    }else if($campaignReport['platform'] == 'instagram')
+                    }else if($campaignReport['publisher_platform'] == 'instagram')
                     {
                         InstagramCampaignReport::create($campaignReport);
                     }
-                    else if($campaignReport['platform'] == 'messenger')
+                    else if($campaignReport['publisher_platform'] == 'messenger')
                     {
                         MessengerCampaignReport::create($campaignReport);
                     }
-                    else if($campaignReport['platform'] == 'audience_network')
+                    else if($campaignReport['publisher_platform'] == 'audience_network')
                     {
                         AudienceNetworkCampaignReport::create($campaignReport);
                     }
@@ -157,18 +157,18 @@ class metaData extends Command
                     $adReport['publisher_platform'] = $adReportData['publisher_platform'];
                     $adReport['purchase_roas'] = $adReportData['purchase_roas'] ? json_encode($adReportData['purchase_roas']) : null;
 
-                    if($adReport['platform'] == 'facebook')
+                    if($adReport['publisher_platform'] == 'facebook')
                     {
                         FacebookAdReport::create($adReport);
-                    }else if($adReport['platform'] == 'instagram')
+                    }else if($adReport['publisher_platform'] == 'instagram')
                     {
                         InstagramAdReport::create($adReport);
                     }
-                    else if($adReport['platform'] == 'messenger')
+                    else if($adReport['publisher_platform'] == 'messenger')
                     {
                         MessengerAdReport::create($adReport);
                     }
-                    else if($adReport['platform'] == 'audience_network')
+                    else if($adReport['publisher_platform'] == 'audience_network')
                     {
                         AudienceNetwrokAdReport::create($adReport);
                     }
@@ -225,18 +225,18 @@ class metaData extends Command
                     $adsetReport['publisher_platform'] = $adsetReportData['publisher_platform'];
                     $adsetReport['purchase_roas'] = $adsetReportData['purchase_roas'] ? json_encode($adsetReportData['purchase_roas']) : null;
 
-                    if($adsetReport['platform'] == 'facebook')
+                    if($adsetReport['publisher_platform'] == 'facebook')
                     {
                         FacebookAdSetReport::create($adsetReport);
-                    }else if($adsetReport['platform'] == 'instagram')
+                    }else if($adsetReport['publisher_platform'] == 'instagram')
                     {
                         InstagramAdSetReport::create($adsetReport);
                     }
-                    else if($adsetReport['platform'] == 'messenger')
+                    else if($adsetReport['publisher_platform'] == 'messenger')
                     {
                         MessengerAdSetReport::create($adsetReport);
                     }
-                    else if($adsetReport['platform'] == 'audience_network')
+                    else if($adsetReport['publisher_platform'] == 'audience_network')
                     {
                         AudienceNetworkAdSetReport::create($adsetReport);
                     }
