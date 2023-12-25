@@ -89,7 +89,7 @@ class metaData extends Command
                     $campaignReport['date_start'] = $campaignReportData['date_start'];
                     $campaignReport['date_stop'] = $campaignReportData['date_stop'];
                     $campaignReport['publisher_platform'] = $campaignReportData['publisher_platform'];
-                    $campaignReport['purchase_roas'] = json_encode($campaignReportData['purchase_roas']);
+                    $campaignReport['purchase_roas'] = $campaignReportData['purchase_roas'] ? json_encode($campaignReportData['purchase_roas']) : null;
 
                     if($campaignReport['platform'] == 'facebook')
                     {
@@ -156,7 +156,7 @@ class metaData extends Command
                     $adReport['date_start'] = $adReportData['date_start'];
                     $adReport['date_stop'] = $adReportData['date_stop'];
                     $adReport['publisher_platform'] = $adReportData['publisher_platform'];
-                    $adReport['purchase_roas'] = json_encode($adReportData['purchase_roas']);
+                    $adReport['purchase_roas'] = $adReportData['purchase_roas'] ? json_encode($adReportData['purchase_roas']) : null;
 
                     if($adReport['platform'] == 'facebook')
                     {
@@ -224,7 +224,7 @@ class metaData extends Command
                     $adsetReport['date_start'] = $adsetReportData['date_start'];
                     $adsetReport['date_stop'] = $adsetReportData['date_stop'];
                     $adsetReport['publisher_platform'] = $adsetReportData['publisher_platform'];
-                    $adsetReport['purchase_roas'] = json_encode($adsetReportData['purchase_roas']);
+                    $adsetReport['purchase_roas'] = $adsetReportData['purchase_roas'] ? json_encode($adsetReportData['purchase_roas']) : null;
 
                     if($adsetReport['platform'] == 'facebook')
                     {
