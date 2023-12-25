@@ -133,7 +133,7 @@ class metaData extends Command
 //                'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'access_token' => config('services.meta.access_token'),
-                'fields' => json_encode(["impressions","campaign_id","ad_set_id","ad_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
+                'fields' => json_encode(["impressions","campaign_id","adset_id","ad_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
                 'level' => 'ad',
                 'time_range' => json_encode(["since"=>Carbon::now()->format('Y-m-d'),
                     "until"=>Carbon::now()->format('Y-m-d')]),
@@ -202,7 +202,7 @@ class metaData extends Command
 //                'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'access_token' => config('services.meta.access_token'),
-                'fields' => json_encode(["impressions","campaign_id","ad_set_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
+                'fields' => json_encode(["impressions","campaign_id","adset_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
                 'level' => 'adset',
                 'time_range' => json_encode(["since"=>Carbon::now()->format('Y-m-d'),
                     "until"=>Carbon::now()->format('Y-m-d')]),
