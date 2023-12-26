@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        //php artisan app:tiktok-data
         $schedule->command('app:tiktok-data')->dailyAt('23:50');
         $schedule->command('app:snapchat-data')->dailyAt('23:50');
         $schedule->command('app:meta-data')->dailyAt('23:50');
