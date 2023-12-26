@@ -13,9 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:tiktok-data')->dailyAt('8:00');
-        $schedule->command('app:snapchat-data')->dailyAt('8:00');
-        $schedule->command('app:meta-data')->dailyAt('8:00');
+        $schedule->command('app:tiktok-data')->dailyAt('23:50');
+        $schedule->command('app:snapchat-data')->dailyAt('23:50');
+        $schedule->command('app:meta-data')->dailyAt('23:50');
     }
 
     /**
