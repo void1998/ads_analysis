@@ -206,6 +206,7 @@ class tiktokData extends Command
                     $adReport['spend'] = $adReportData['metrics']['spend'];
                     $adReport['stat_time_day'] = $adReportData['dimensions']['stat_time_day'];
                     $adReport['ad_id'] = $adReportData['dimensions']['ad_id'];
+                    $adReport['campaign_name'] = $adReportData['dimensions']['campaign_name'];
                     AdsReport::create($adReport);
                 }
                 DB::commit();
@@ -259,6 +260,7 @@ class tiktokData extends Command
                     $adGroupReport['spend'] = $adGroupReportData['metrics']['spend'];
                     $adGroupReport['stat_time_day'] = $adGroupReportData['dimensions']['stat_time_day'];
                     $adGroupReport['ad_group_id'] = $adGroupReportData['dimensions']['adgroup_id'];
+                    $adGroupReport['campaign_name'] = $adGroupReportData['dimensions']['campaign_name'];
                     SnapchatCampaignReport::create($adGroupReport);
                 }
                 DB::commit();
@@ -312,6 +314,7 @@ class tiktokData extends Command
                     $campaignReport['spend'] = $campaignReportData['metrics']['spend'];
                     $campaignReport['stat_time_day'] = $campaignReportData['dimensions']['stat_time_day'];
                     $campaignReport['campaign_id'] = $campaignReportData['dimensions']['campaign_id'];
+                    $campaignReport['campaign_name'] = $campaignReportData['dimensions']['campaign_name'];
                     CampaignsReport::create($campaignReport);
                 }
                 DB::commit();
