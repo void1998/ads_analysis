@@ -61,7 +61,7 @@ class metaData extends Command
     }
     public function getRangeDateMetaAndTikTok()
     {
-        $start_date = '2023-01-01'; // Start date
+        $start_date = '2023-10-9'; // Start date
         $end_date = '2023-12-31'; // End date
 
 // Create DateTime objects from the start and end dates
