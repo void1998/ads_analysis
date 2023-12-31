@@ -245,7 +245,7 @@ class snapchatData extends Command
     public function getRangeDateSnapChat()
     {
         $start_date = '2023-01-02'; // Start date
-        $end_date = '2023-02-01'; // End date
+        $end_date = '2023-12-31'; // End date
 
 // Create DateTime objects from the start and end dates
         $start_datetime = new DateTime($start_date);
