@@ -320,9 +320,9 @@ class tiktokData extends Command
         $date_list=$this->getRangeDateMetaAndTikTok();
         foreach ($date_list as $date)
         {
-//            $this->getAdsReport($date,$date);
+            $this->getAdsReport($date,$date);
             $this->getAdsGroupsReport($date,$date);
-//            $this->getCampaignsReport($date,$date);
+            $this->getCampaignsReport($date,$date);
         }
 
     }
