@@ -89,17 +89,17 @@ class metaData extends Command
 
     public function runcampignsOnrange()
     {
-        $date_list=$this->getRangeDateMetaAndTikTok();
-            foreach ($date_list as $date){
-
-                $this->getAdsReport($date,$date);
-                $this->getAdSetsReport($date,$date);
-                $this->getCampaignsReport($date,$date);
-            }
+//        $date_list=$this->getRangeDateMetaAndTikTok();
+//            foreach ($date_list as $date){
+        $date=Carbon::now()->format('Y-m-d');
+        $this->getAdsReport($date,$date);
+        $this->getAdSetsReport($date,$date);
+        $this->getCampaignsReport($date,$date);
+//            }
 
     }
 
-//   parameter Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')]
+//   parameter Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')
     public function getCampaignsReport($since,$until)
     {
         try {

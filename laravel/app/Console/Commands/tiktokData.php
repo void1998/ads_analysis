@@ -317,13 +317,14 @@ class tiktokData extends Command
     }
     public function getDataWithRangeDate()
     {
-        $date_list=$this->getRangeDateMetaAndTikTok();
-        foreach ($date_list as $date)
-        {
+//        $date_list=$this->getRangeDateMetaAndTikTok();
+//        foreach ($date_list as $date)
+//        {
+            $date= Carbon::now()->format('Y-m-d');
             $this->getAdsReport($date,$date);
             $this->getAdsGroupsReport($date,$date);
             $this->getCampaignsReport($date,$date);
-        }
+//        }
 
     }
 //    Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')

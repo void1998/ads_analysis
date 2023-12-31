@@ -271,16 +271,18 @@ class snapchatData extends Command
     }
     public function getDataWithRangeDate($accessToken)
     {
-        $date_list=$this->getRangeDateSnapChat();
-        $prevDate='2023-01-01T00:00:00.000+03:00';
-        foreach ($date_list as $date)
-
-        {
+//        $date_list=$this->getRangeDateSnapChat();
+//        $prevDate='2023-01-01T00:00:00.000+03:00';
+//        foreach ($date_list as $date)
+//
+//        {
+            $date=Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP');
+            $prevDate=Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP');
             $this->getCampaignsReport($accessToken,$date,$prevDate);
             $this->getAdsReport($accessToken,$date,$prevDate);
             $this->getAdsquadsReport($accessToken,$date,$prevDate);
-            $prevDate=$date;
-        }
+//            $prevDate=$date;
+//        }
 
     }
 //    Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP')
