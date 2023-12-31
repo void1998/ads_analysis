@@ -17,6 +17,8 @@ class AdsGroupsReport extends Model
     public mixed $spend;
     public mixed $stat_time_day;
     public mixed $ad_group_id;
+    protected $table = 'ads_groups_reports';
+
     protected $fillable = [
         'ad_group_id',
         'stat_time_day',
@@ -27,5 +29,7 @@ class AdsGroupsReport extends Model
         'total_purchase_value',
         'clicks',
         'conversion_rate',
+        'adgroup_name',
+        'campaign_name'
     ];
 }

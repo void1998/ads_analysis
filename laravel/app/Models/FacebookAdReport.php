@@ -13,6 +13,7 @@ class FacebookAdReport extends Model
         'campaign_id',
         'adset_id',
         'ad_id',
+        'ad_name',
         'campaign_name',
         'impressions',
         'clicks',

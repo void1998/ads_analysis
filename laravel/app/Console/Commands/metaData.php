@@ -16,6 +16,9 @@ use App\Models\MessengerAdReport;
 use App\Models\MessengerAdSetReport;
 use App\Models\MessengerCampaignReport;
 use Carbon\Carbon;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -43,23 +46,61 @@ class metaData extends Command
     public function handle()
     {
         Log::info("meta data sync start");
-        $campaignsReportsCount = $this->getCampaignsReport();
+        $campaignsReportsCount = $this->runcampignsOnrange();
         Log::info('$campaignsReportsCount:'.$campaignsReportsCount);
-        $adSetsReportsCount = $this->getAdSetsReport();
-        Log::info('$adSetsReportsCount:'.$adSetsReportsCount);
-        $adsReportsCount = $this->getAdsReport();
-        Log::info('$adsReportsCount:'.$adsReportsCount);
-        Log::info("meta data sync end");
-        $this->info('end');
-        $this->info($campaignsReportsCount);
-        $this->info($adSetsReportsCount);
-        $this->info($adsReportsCount);
+//        $adSetsReportsCount = $this->getAdSetsReport();
+//        Log::info('$adSetsReportsCount:'.$adSetsReportsCount);
+//        $adsReportsCount = $this->getAdsReport();
+//        Log::info('$adsReportsCount:'.$adsReportsCount);
+//        Log::info("meta data sync end");
+//        $this->info('end');
+//        $this->info($campaignsReportsCount);
+//        $this->info($adSetsReportsCount);
+//        $this->info($adsReportsCount);
+
+    }
+    public function getRangeDateMetaAndTikTok()
+    {
+        $start_date = '2023-01-01'; // Start date
+        $end_date = '2023-01-31'; // End date
+
+// Create DateTime objects from the start and end dates
+        $start_datetime = new DateTime($start_date);
+        $end_datetime = new DateTime($end_date);
+
+// Create an interval of 1 day
+        $interval = new DateInterval('P1D');
+
+// Create a date range using the start and end dates and the interval
+        $date_range = new DatePeriod($start_datetime, $interval, $end_datetime);
+
+// Generate the list of dates in 'Y-m-d' format
+        $date_list = [];
+        foreach ($date_range as $date) {
+
+
+            $date_list[] = $date->format('Y-m-d');
+        }
+
+// Print the list of dates
+        return $date_list;
 
     }
 
+    public function runcampignsOnrange()
+    {
+        $date_list=$this->getRangeDateMetaAndTikTok();
+            foreach ($date_list as $date){
 
+                $this->getAdsReport($date,$date);
+                $this->getAdSetsReport($date,$date);
+                $this->getCampaignsReport($date,$date);
+            }
 
-    public function getCampaignsReport()
+    }
+
+//   parameter Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')]
+    public function getCampaignsReport($since,$until)
     {
         try {
 
@@ -74,14 +115,15 @@ class metaData extends Command
                     'access_token' => config('services.meta.access_token'),
                     'fields' => json_encode(["impressions","campaign_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
                     'level' => 'campaign',
-                    'time_range' => json_encode(["since"=>Carbon::now()->format('Y-m-d'),
-                        "until"=>Carbon::now()->format('Y-m-d')]),
+                    'time_range' => json_encode(["since"=>$since,
+                        "until"=>$until]),
                     'time_increment' => '1',
                     'breakdowns' => 'publisher_platform',
                     'page_size' => 50,
                     'after' => $nextPage
                 ]);
                 if ($response->successful()) {
+
                     $campaignsReport = $response['data'];
                     if(count($campaignsReport) <= 0)
                     {
@@ -100,7 +142,7 @@ class metaData extends Command
                         $campaignReport['date_start'] = $campaignReportData['date_start'];
                         $campaignReport['date_stop'] = $campaignReportData['date_stop'];
                         $campaignReport['publisher_platform'] = $campaignReportData['publisher_platform'];
-                        $campaignReport['purchase_roas'] = isset($campaignReportData['purchase_roas']) ? json_encode($campaignReportData['purchase_roas']) : null;
+                        $campaignReport['purchase_roas'] = isset($campaignReportData['purchase_roas']) ? $campaignReportData['purchase_roas'][0]['value'] : null;
 
                         if($campaignReport['publisher_platform'] == 'facebook')
                         {
@@ -141,7 +183,7 @@ class metaData extends Command
             ], 500);
         }
     }
-    public function getAdsReport()
+    public function getAdsReport($since,$until)
     {
         try {
 
@@ -149,15 +191,16 @@ class metaData extends Command
             $stop = false;
             $nextPage = '';
             do{
+
                 DB::beginTransaction();
                 $response = Http::withHeaders([
 //                'Access-Token' => config('services.tiktok.access_token'),
                 ])->get($apiEndpoint, [
                     'access_token' => config('services.meta.access_token'),
-                    'fields' => json_encode(["impressions","campaign_id","adset_id","ad_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
+                    'fields' => json_encode(["impressions","campaign_id","adset_id","ad_id","campaign_name","ad_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
                     'level' => 'ad',
-                    'time_range' => json_encode(["since"=>Carbon::now()->format('Y-m-d'),
-                        "until"=>Carbon::now()->format('Y-m-d')]),
+                    'time_range' => json_encode(["since"=>$since,
+                        "until"=>$until]),
                     'time_increment' => '1',
                     'breakdowns' => 'publisher_platform',
                     'page_size' => 50,
@@ -165,6 +208,7 @@ class metaData extends Command
                 ]);
                 if ($response->successful()) {
                     $adsReport = $response['data'];
+
                     if(count($adsReport) <= 0)
                     {
                         $stop = true;
@@ -179,18 +223,21 @@ class metaData extends Command
                         $adReport['adset_id'] = $adReportData['adset_id'];
                         $adReport['campaign_id'] = $adReportData['campaign_id'];
                         $adReport['campaign_name'] = $adReportData['campaign_name'];
+                        $adReport['ad_name']=$adReportData['ad_name'];
                         $adReport['clicks'] = $adReportData['clicks'];
                         $adReport['spend'] = $adReportData['spend'];
                         $adReport['date_start'] = $adReportData['date_start'];
                         $adReport['date_stop'] = $adReportData['date_stop'];
                         $adReport['publisher_platform'] = $adReportData['publisher_platform'];
-                        $adReport['purchase_roas'] = isset($adReportData['purchase_roas']) ? json_encode($adReportData['purchase_roas']) : null;
+                        $adReport['purchase_roas'] = isset($adReportData['purchase_roas']) ? $adReportData['purchase_roas'][0]['value'] : null;
 
                         if($adReport['publisher_platform'] == 'facebook')
                         {
+
                             FacebookAdReport::create($adReport);
                         }else if($adReport['publisher_platform'] == 'instagram')
                         {
+
                             InstagramAdReport::create($adReport);
                         }
                         else if($adReport['publisher_platform'] == 'messenger')
@@ -207,6 +254,7 @@ class metaData extends Command
                     Log::info(count($adsReport));
                 } else {
                     Log::info('Failed to fetch meta ad information.');
+                    echo "faild";
                     return response()->json([
                         'message' => 'Failed to fetch meta ad information.',
                     ], $response->status());
@@ -227,7 +275,7 @@ class metaData extends Command
     }
 
 
-    public function getAdSetsReport()
+    public function getAdSetsReport($since,$until)
     {
         try {
             DB::beginTransaction();
@@ -239,10 +287,10 @@ class metaData extends Command
 //                'Access-Token' => config('services.tiktok.access_token'),
                 ])->get($apiEndpoint, [
                     'access_token' => config('services.meta.access_token'),
-                    'fields' => json_encode(["impressions","campaign_id","adset_id","campaign_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
+                    'fields' => json_encode(["impressions","campaign_id","adset_id","campaign_name","adset_name","clicks","purchase_roas","spend","conversion_values","conversions"]),
                     'level' => 'adset',
-                    'time_range' => json_encode(["since"=>Carbon::now()->format('Y-m-d'),
-                        "until"=>Carbon::now()->format('Y-m-d')]),
+                    'time_range' => json_encode(["since"=>$since,
+                        "until"=>$until]),
                     'time_increment' => '1',
                     'breakdowns' => 'publisher_platform',
                     'page_size' => 50,
@@ -268,8 +316,8 @@ class metaData extends Command
                         $adsetReport['date_start'] = $adsetReportData['date_start'];
                         $adsetReport['date_stop'] = $adsetReportData['date_stop'];
                         $adsetReport['publisher_platform'] = $adsetReportData['publisher_platform'];
-                        $adsetReport['purchase_roas'] = isset($adsetReportData['purchase_roas']) ? json_encode($adsetReportData['purchase_roas']) : null;
-
+                        $adsetReport['purchase_roas'] = isset($adsetReportData['purchase_roas']) ? $adsetReportData['purchase_roas'][0]['value'] : null;
+                        $adsetReport['adset_name']=$adsetReportData['adset_name'];
                         if($adsetReport['publisher_platform'] == 'facebook')
                         {
                             FacebookAdSetReport::create($adsetReport);

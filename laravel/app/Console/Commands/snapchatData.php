@@ -8,6 +8,10 @@ use App\Models\SnapchatAdReport;
 use App\Models\SnapchatAdsquadReport;
 use App\Models\SnapchatCampaignReport;
 use Carbon\Carbon;
+use DateInterval;
+use DatePeriod;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -47,13 +51,13 @@ class snapchatData extends Command
         Log::info('adssquadsCount:'.$adsquadsCount);
         $adsCount = $this->getAds($accessToken);
         Log::info('adsCount:'.$adsCount);
-        $campaignsReportsCount = $this->getCampaignsReport($accessToken);
+        $campaignsReportsCount = $this->getDataWithRangeDate($accessToken);
         Log::info('$campaignsReportsCount:'.$campaignsReportsCount);
-        $adsquadsReportsCount = $this->getAdsquadsReport($accessToken);
-        Log::info('$adsquadsReportsCount:'.$adsquadsReportsCount);
-        $adsReportsCount = $this->getAdsReport($accessToken);
-        Log::info('$adsReportsCount:'.$adsReportsCount);
-        Log::info("snapchat data sync end");
+//        $adsquadsReportsCount = $this->getAdsquadsReport($accessToken);
+//        Log::info('$adsquadsReportsCount:'.$adsquadsReportsCount);
+//        $adsReportsCount = $this->getAdsReport($accessToken);
+//        Log::info('$adsReportsCount:'.$adsReportsCount);
+//        Log::info("snapchat data sync end");
     }
 
 
@@ -238,7 +242,49 @@ class snapchatData extends Command
     }
 
 
-    public function getCampaignsReport($accessToken)
+    public function getRangeDateSnapChat()
+    {
+        $start_date = '2023-01-02'; // Start date
+        $end_date = '2023-02-01'; // End date
+
+// Create DateTime objects from the start and end dates
+        $start_datetime = new DateTime($start_date);
+        $end_datetime = new DateTime($end_date);
+
+// Create an interval of 1 day
+        $interval = new DateInterval('P1D');
+
+// Create a date range using the start and end dates and the interval
+        $date_range = new DatePeriod($start_datetime, $interval, $end_datetime);
+
+// Generate the list of dates in 'Y-m-d' format
+        $date_list = [];
+        foreach ($date_range as $date) {
+
+            $date=$date->format('Y-m-d');
+            $date = new DateTime($date, new DateTimeZone('Asia/Riyadh'));
+            $date_list[] = $date->format('Y-m-d\TH:i:s.vP');
+        }
+
+// Print the list of dates
+        return $date_list;
+    }
+    public function getDataWithRangeDate($accessToken)
+    {
+        $date_list=$this->getRangeDateSnapChat();
+        $prevDate='2023-01-01T00:00:00.000+03:00';
+        foreach ($date_list as $date)
+
+        {
+            $this->getCampaignsReport($accessToken,$date,$prevDate);
+            $this->getAdsReport($accessToken,$date,$prevDate);
+            $this->getAdsquadsReport($accessToken,$date,$prevDate);
+            $prevDate=$date;
+        }
+
+    }
+//    Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP')
+    public function getCampaignsReport($accessToken,$currday,$yesterday)
     {
         try {
             DB::beginTransaction();
@@ -250,8 +296,8 @@ class snapchatData extends Command
                 'fields'=>
                     'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'end_time'=>Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
-                'start_time'=>Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>$currday,
+                'start_time'=>$yesterday,
                 'granularity'=>'DAY',
             ]);
 
@@ -298,7 +344,7 @@ class snapchatData extends Command
     }
 
 
-    public function getAdsquadsReport($accessToken)
+    public function getAdsquadsReport($accessToken,$currday,$yesterday)
     {
         try {
             DB::beginTransaction();
@@ -310,8 +356,8 @@ class snapchatData extends Command
                 'fields'=>
                     'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'end_time'=>Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
-                'start_time'=>Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>$currday,
+                'start_time'=>$yesterday,
                 'granularity'=>'DAY',
             ]);
 
@@ -358,7 +404,7 @@ class snapchatData extends Command
     }
 
 
-    public function getAdsReport($accessToken)
+    public function getAdsReport($accessToken,$currday,$yesterday)
     {
         try {
             DB::beginTransaction();
@@ -370,8 +416,8 @@ class snapchatData extends Command
                 'fields'=>
                     'conversion_purchases_value,conversion_purchases,impressions,spend,swipes,conversion_rate,conversion_add_cart,conversion_add_cart_value,conversion_page_views,conversion_page_views_value,conversion_ad_view,conversion_ad_view_value',
                 'conversion_source_types'=>'total',
-                'end_time'=>Carbon::now('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
-                'start_time'=>Carbon::yesterday('Asia/Riyadh')->startOfDay()->format('Y-m-d\TH:i:s.vP'),
+                'end_time'=>$currday,
+                'start_time'=>$yesterday,
                 'granularity'=>'DAY',
             ]);
 

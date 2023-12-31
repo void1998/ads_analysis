@@ -4,11 +4,15 @@ namespace App\Console\Commands;
 
 use App\Models\Ad;
 use App\Models\AdsGroup;
+use App\Models\AdsGroupsReport;
 use App\Models\SnapchatCampaignReport;
 use App\Models\AdsReport;
 use App\Models\Campaign;
 use App\Models\CampaignsReport;
 use Carbon\Carbon;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -35,20 +39,20 @@ class tiktokData extends Command
      */
     public function handle()
     {
-        Log::info("tiktok data sync start");
-        $campaignsCount = $this->getCampaigns();
-        Log::info('campaignsCount:'.$campaignsCount);
-        $adsGroupsCount = $this->getAdsGroups();
-        Log::info('adsGroupsCount:'.$adsGroupsCount);
-        $adsCount = $this->getAds();
-        Log::info('adsCount:'.$adsCount);
-        $campaignsReportsCount = $this->getCampaignsReport();
+//        Log::info("tiktok data sync start");
+//        $campaignsCount = $this->getCampaigns();
+//        Log::info('campaignsCount:'.$campaignsCount);
+//        $adsGroupsCount = $this->getAdsGroups();
+//        Log::info('adsGroupsCount:'.$adsGroupsCount);
+//        $adsCount = $this->getAds();
+//        Log::info('adsCount:'.$adsCount);
+        $campaignsReportsCount = $this->getDataWithRangeDate();
         Log::info('campaignsReportsCount:'.$campaignsReportsCount);
-        $adsGroupsReportsCount = $this->getAdsGroupsReport();
-        Log::info('adGroupsReportsCount:'.$adsGroupsReportsCount);
-        $adsReportsCount = $this->getAdsReport();
-        Log::info('adsReportsCount:'.$adsReportsCount);
-        Log::info("tiktok data sync end");
+//        $adsGroupsReportsCount = $this->getAdsGroupsReport();
+//        Log::info('adGroupsReportsCount:'.$adsGroupsReportsCount);
+//        $adsReportsCount = $this->getAdsReport();
+//        Log::info('adsReportsCount:'.$adsReportsCount);
+//        Log::info("tiktok data sync end");
     }
 
 
@@ -173,7 +177,7 @@ class tiktokData extends Command
         }
     }
 
-    public function getAdsReport()
+    public function getAdsReport($start_date,$end_date)
     {
         try {
             DB::beginTransaction();
@@ -182,7 +186,7 @@ class tiktokData extends Command
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'advertiser_id' => config('services.tiktok.advertiser_id'),
-                'metrics' => json_encode(["spend","campaign_name", "impressions","total_purchase_value",
+                'metrics' => json_encode(["spend","campaign_name","ad_name", "impressions","total_purchase_value",
                     "total_onsite_shopping_value","conversion_rate","clicks","offline_shopping_events_value"]),
                 'data_level' => 'AUCTION_AD',
                 'dimensions' => json_encode(["ad_id","stat_time_day"]),
@@ -190,10 +194,11 @@ class tiktokData extends Command
                 'report_type' => 'BASIC',
                 'page_size' => 50,
                 'page'  =>  1,
-                'start_date' => Carbon::now()->format('Y-m-d'),
-                'end_date' => Carbon::now()->format('Y-m-d')
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ]);
             if ($response->successful()) {
+
                 $adsReport = $response['data']['list'];
                 foreach ($adsReport as $adReportData) {
                     $adReport = [];
@@ -206,7 +211,8 @@ class tiktokData extends Command
                     $adReport['spend'] = $adReportData['metrics']['spend'];
                     $adReport['stat_time_day'] = $adReportData['dimensions']['stat_time_day'];
                     $adReport['ad_id'] = $adReportData['dimensions']['ad_id'];
-                    $adReport['campaign_name'] = $adReportData['dimensions']['campaign_name'];
+                    $adReport['campaign_name'] = $adReportData['metrics']['campaign_name'];
+                    $adReport['ad_name']=$adReportData['metrics']['ad_name'];
                     AdsReport::create($adReport);
                 }
                 DB::commit();
@@ -227,7 +233,7 @@ class tiktokData extends Command
         }
     }
 
-    public function getAdsGroupsReport()
+    public function getAdsGroupsReport($start_date,$end_date)
     {
         try {
             DB::beginTransaction();
@@ -236,7 +242,7 @@ class tiktokData extends Command
                 'Access-Token' => config('services.tiktok.access_token'),
             ])->get($apiEndpoint, [
                 'advertiser_id' => config('services.tiktok.advertiser_id'),
-                'metrics' => json_encode(["spend","campaign_name", "impressions","total_purchase_value",
+                'metrics' => json_encode(["spend","campaign_name","adgroup_name", "impressions","total_purchase_value",
                     "total_onsite_shopping_value","conversion_rate","clicks","offline_shopping_events_value"]),
                 'data_level' => 'AUCTION_ADGROUP',
                 'dimensions' => json_encode(["adgroup_id","stat_time_day"]),
@@ -244,8 +250,8 @@ class tiktokData extends Command
                 'report_type' => 'BASIC',
                 'page_size' => 50,
                 'page'  =>  1,
-                'start_date' => Carbon::now()->format('Y-m-d'),
-                'end_date' => Carbon::now()->format('Y-m-d')
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ]);
             if ($response->successful()) {
                 $adsGroupsReport = $response['data']['list'];
@@ -260,8 +266,9 @@ class tiktokData extends Command
                     $adGroupReport['spend'] = $adGroupReportData['metrics']['spend'];
                     $adGroupReport['stat_time_day'] = $adGroupReportData['dimensions']['stat_time_day'];
                     $adGroupReport['ad_group_id'] = $adGroupReportData['dimensions']['adgroup_id'];
-                    $adGroupReport['campaign_name'] = $adGroupReportData['dimensions']['campaign_name'];
-                    SnapchatCampaignReport::create($adGroupReport);
+                    $adGroupReport['campaign_name'] = $adGroupReportData['metrics']['campaign_name'];
+                    $adGroupReport['adgroup_name']=$adGroupReportData['metrics']['adgroup_name'];
+                    AdsGroupsReport::create($adGroupReport);
                 }
                 DB::commit();
                 return count($adsGroupsReport);
@@ -281,7 +288,46 @@ class tiktokData extends Command
         }
     }
 
-    public function getCampaignsReport()
+    public function getRangeDateMetaAndTikTok()
+    {
+        $start_date = '2023-01-01'; // Start date
+        $end_date = '2023-01-31'; // End date
+
+// Create DateTime objects from the start and end dates
+        $start_datetime = new DateTime($start_date);
+        $end_datetime = new DateTime($end_date);
+
+// Create an interval of 1 day
+        $interval = new DateInterval('P1D');
+
+// Create a date range using the start and end dates and the interval
+        $date_range = new DatePeriod($start_datetime, $interval, $end_datetime);
+
+// Generate the list of dates in 'Y-m-d' format
+        $date_list = [];
+        foreach ($date_range as $date) {
+
+
+            $date_list[] = $date->format('Y-m-d');
+        }
+
+// Print the list of dates
+        return $date_list;
+
+    }
+    public function getDataWithRangeDate()
+    {
+        $date_list=$this->getRangeDateMetaAndTikTok();
+        foreach ($date_list as $date)
+        {
+//            $this->getAdsReport($date,$date);
+            $this->getAdsGroupsReport($date,$date);
+//            $this->getCampaignsReport($date,$date);
+        }
+
+    }
+//    Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')
+    public function getCampaignsReport($start_date,$end_date)
     {
         try {
             DB::beginTransaction();
@@ -298,10 +344,11 @@ class tiktokData extends Command
                 'report_type' => 'BASIC',
                 'page_size' => 50,
                 'page'  =>  1,
-                'start_date' => Carbon::now()->format('Y-m-d'),
-                'end_date' => Carbon::now()->format('Y-m-d')
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ]);
             if ($response->successful()) {
+
                 $campaignsReport = $response['data']['list'];
                 foreach ($campaignsReport as $campaignReportData) {
                     $campaignReport = [];
@@ -314,7 +361,7 @@ class tiktokData extends Command
                     $campaignReport['spend'] = $campaignReportData['metrics']['spend'];
                     $campaignReport['stat_time_day'] = $campaignReportData['dimensions']['stat_time_day'];
                     $campaignReport['campaign_id'] = $campaignReportData['dimensions']['campaign_id'];
-                    $campaignReport['campaign_name'] = $campaignReportData['dimensions']['campaign_name'];
+                    $campaignReport['campaign_name'] = $campaignReportData['metrics']['campaign_name'];
                     CampaignsReport::create($campaignReport);
                 }
                 DB::commit();

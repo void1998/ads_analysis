@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('fallback_type')->default('UNSET');
             $table->string('campaign_id');
             $table->text('landing_page_urls')->nullable();
-            $table->timestamp('create_time');
+            $table->timestamp('create_time')->nullable();
             $table->json('image_ids')->nullable();
             $table->string('music_id')->nullable();
             $table->boolean('is_new_structure')->nullable();

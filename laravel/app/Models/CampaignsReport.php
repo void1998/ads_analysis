@@ -18,6 +18,8 @@ class CampaignsReport extends Model
     public mixed $spend;
     public mixed $stat_time_day;
     public mixed $campaign_id;
+    protected $table = 'campaigns_reports';
+
     protected $fillable = [
         'campaign_id',
         'stat_time_day',
@@ -28,5 +30,6 @@ class CampaignsReport extends Model
         'total_purchase_value',
         'clicks',
         'conversion_rate',
+        'campaign_name'
     ];
 }

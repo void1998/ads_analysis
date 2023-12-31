@@ -12,6 +12,7 @@ class FacebookAdSetReport extends Model
     protected $fillable = [
         'campaign_id',
         'adset_id',
+        'adset_name',
         'campaign_name',
         'impressions',
         'clicks',

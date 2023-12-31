@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('adsquad_id');
             $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->timestamp('end_time')->nullable();
             $table->double('impressions');
             $table->double('swipes');
             $table->double('spend');
